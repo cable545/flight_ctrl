@@ -1,7 +1,9 @@
+#include "platform.h"
 
-#include "ext_flash.h"
-#include "nvic.h"
-#include "spi.h"
+#include "drivers/ext_flash.h"
+#include "drivers/nvic.h"
+
+#include "hw/spi.h"
 
 uint8_t EXT_FLASH_readDeviceId(void)
 {
@@ -57,7 +59,7 @@ uint8_t EXT_FLASH_readByte(uint8_t* address)
 
 void EXT_FLASH_readBytes(uint8_t* address, uint8_t* values, uint8_t length)
 {
-	disable();
+	DISABLE_INT;
 
 	CS_FLASH_ACTIVATE;
 
@@ -71,7 +73,7 @@ void EXT_FLASH_readBytes(uint8_t* address, uint8_t* values, uint8_t length)
 
 	CS_FLASH_DEACTIVATE;
 
-	enable();
+	ENABLE_INT;
 }
 
 void EXT_FLASH_writeByte(uint8_t* address, uint8_t value)
@@ -93,7 +95,7 @@ void EXT_FLASH_writeByte(uint8_t* address, uint8_t value)
 
 void EXT_FLASH_writeBytes(uint8_t* address, uint8_t* values, uint8_t length)
 {
-	disable();
+	DISABLE_INT;
 
 	EXT_FLASH_writeEnable();
 	CS_FLASH_ACTIVATE;
@@ -108,7 +110,7 @@ void EXT_FLASH_writeBytes(uint8_t* address, uint8_t* values, uint8_t length)
 	CS_FLASH_DEACTIVATE;
 	EXT_FLASH_writeDisable();
 
-	enable();
+	ENABLE_INT;
 }
 
 void EXT_FLASH_writeEnable(void)

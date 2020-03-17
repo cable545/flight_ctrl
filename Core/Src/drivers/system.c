@@ -42,8 +42,8 @@ static void cycleCounterInit(void)
 void SYSTEM_Init(void)
 {
 	SystemInit();
-	SysTick_Config(SystemCoreClock / 1000); // SysTick 1ms ticks
-	cycleCounterInit();
+	//SysTick_Config(SystemCoreClock / 1000); // SysTick 1ms ticks
+	//cycleCounterInit();
 }
 
 // SysTick

@@ -6,11 +6,15 @@
 
 #include "platform.h"
 
+#include "drivers/buzzer.h"
+#include "drivers/mpu.h"
+#include "drivers/system.h"
+
 #include "fc/init.h"
 
 #include "scheduler/scheduler.h"
 
-#include "drivers/buzzer.h"
+static float accBuffer[3], gyroBuffer[3];
 
 void run(void);
 
@@ -34,7 +38,7 @@ int main(void)
 {
   init();
 
-  BUZZER_Beep(3);
+  //BUZZER_Beep(3);
 
   run();
 
@@ -43,9 +47,17 @@ int main(void)
 
 void run(void)
 {
+	uint8_t reg = 0;
+
+
 	while(true)
 	{
-		scheduler();
+
+		//delay(10);
+		//reg = MPU_readWhoAmIReg();
+		MPU_ReadScaledAccData(accBuffer);
+		MPU_ReadScaledGyroData(gyroBuffer);
+		//scheduler();
 		//processLoopback();
 #ifdef SIMULATOR_BUILD
 		//delayMicroseconds_real(50); // max rate 20kHz

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <stdint.h>
 
+#include "scheduler/maths.h"
 #include "scheduler/scheduler.h"
 
 #include "common/time.h"
